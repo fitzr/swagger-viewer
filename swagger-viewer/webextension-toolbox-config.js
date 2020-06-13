@@ -2,6 +2,7 @@
 const { resolve } = require("path")
 const GlobEntriesPlugin = require("webpack-watched-glob-entries-plugin")
 const babelOptions = require("./babel.config")
+const TerserPlugin = require("terser-webpack-plugin")
 /* eslint-enable */
 
 module.exports = {
@@ -45,6 +46,17 @@ module.exports = {
         },
       ],
     })
+
+    config.optimization.minimizer = [
+      new TerserPlugin({
+        terserOptions: {
+          output: {
+            ascii_only: true,
+            comments: false,
+          },
+        },
+      }),
+    ]
 
     return config
   },

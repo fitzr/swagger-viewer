@@ -5,10 +5,20 @@
     <title>Options</title>
   </head>
   <body>
-    <label>
-      No options
-    </label>
-
+    <div>
+       <label for="urls">
+         switch URLs:
+       </label>
+    </div>
+    <div>
+      <textarea
+              id="urls"
+              cols="70"
+              rows="8"
+              placeholder="http://example.com/swagger1.yml&#13;&#10;http://example.com/swagger2.yml"
+      ></textarea>
+    </div>
+    <button id="save">Save</button>
     <script src="../scripts/options.js"></script>
   </body>
 </html>
