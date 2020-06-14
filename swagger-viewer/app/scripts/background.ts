@@ -16,23 +16,27 @@ chrome.browserAction.onClicked.addListener((tab) => {
   } as CastAny) as ExecConvertSwaggerMessage)
 })
 
-let urls: string[] = []
+let urlList: string[] = []
 
 chrome.runtime.onInstalled.addListener(() => {
   if (localStorage.urls) {
-    urls = localStorage.urls.split("\n")
+    urlList = localStorage.urls.split("\n")
   }
 })
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
   if (request.type === UPDATE_URLS) {
-    urls = request.urls
+    urlList = request.urls.split("\n")
   }
   sendResponse()
 })
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-  if (changeInfo.status === "complete" && urls.includes(tab.url)) {
+  if (
+    changeInfo.status === "complete" &&
+    tab.url &&
+    urlList.includes(tab.url)
+  ) {
     chrome.tabs.sendMessage(tabId, ({
       type: EXEC_CONVERT_SWAGGER,
     } as CastAny) as ExecConvertSwaggerMessage)

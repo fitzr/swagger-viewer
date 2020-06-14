@@ -1,6 +1,8 @@
+import { getDocument } from "../../app-src/contentscript/data/QuerySelector/Document"
 import { UPDATE_URLS } from "../../app-src/shared/constants/SendMessageTypes"
 
 const init = (): void => {
+  const document = getDocument()
   const $urls = document.getElementById("urls") as HTMLTextAreaElement
   const $save = document.getElementById("save") as HTMLButtonElement
   if (localStorage.urls) {
@@ -13,7 +15,7 @@ const init = (): void => {
       chrome.runtime.sendMessage(
         {
           type: UPDATE_URLS,
-          urls: $urls.value.split("\n"),
+          urls: $urls.value,
         },
         () => {
           window.close()
@@ -24,4 +26,4 @@ const init = (): void => {
   )
 }
 
-document.addEventListener("DOMContentLoaded", init)
+getDocument().addEventListener("DOMContentLoaded", init)
