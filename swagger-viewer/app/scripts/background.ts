@@ -1,5 +1,6 @@
 import {
   EXEC_CONVERT_SWAGGER,
+  EXEC_CONVERT_SWAGGER_IF_NOT_CONVERTED,
   UPDATE_URLS,
 } from "../../app-src/shared/constants/SendMessageTypes"
 import { ExecConvertSwaggerMessage } from "../../app-src/shared/types/SendMessage"
@@ -38,7 +39,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     urlList.includes(tab.url)
   ) {
     chrome.tabs.sendMessage(tabId, ({
-      type: EXEC_CONVERT_SWAGGER,
+      type: EXEC_CONVERT_SWAGGER_IF_NOT_CONVERTED,
     } as CastAny) as ExecConvertSwaggerMessage)
   }
 })

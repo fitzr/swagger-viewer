@@ -12,7 +12,10 @@ import { getDocument } from "../../app-src/contentscript/data/QuerySelector/Docu
 import { render } from "../../app-src/contentscript/presentation"
 import { convertToObject } from "../../app-src/contentscript/util/YmlUtils"
 import { APP_RENDER_ID } from "../../app-src/shared/constants/App"
-import { EXEC_CONVERT_SWAGGER } from "../../app-src/shared/constants/SendMessageTypes"
+import {
+  EXEC_CONVERT_SWAGGER,
+  EXEC_CONVERT_SWAGGER_IF_NOT_CONVERTED,
+} from "../../app-src/shared/constants/SendMessageTypes"
 import { ExecConvertSwaggerMessage } from "../../app-src/shared/types/SendMessage"
 
 /* eslint-disable no-alert */
@@ -23,6 +26,12 @@ import { ExecConvertSwaggerMessage } from "../../app-src/shared/types/SendMessag
  */
 chrome.runtime.onMessage.addListener((message: ExecConvertSwaggerMessage) => {
   if (message.type === EXEC_CONVERT_SWAGGER) {
+    execConvertSwagger()
+  }
+  if (
+    message.type === EXEC_CONVERT_SWAGGER_IF_NOT_CONVERTED &&
+    !isConverted()
+  ) {
     execConvertSwagger()
   }
 })
