@@ -18,6 +18,9 @@ chrome.browserAction.onClicked.addListener((tab) => {
 })
 
 let urlList: string[] = []
+if (localStorage.urls) {
+  urlList = localStorage.urls.split("\n")
+}
 
 chrome.runtime.onInstalled.addListener(() => {
   if (localStorage.urls) {
